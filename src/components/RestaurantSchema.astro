@@ -1,0 +1,35 @@
+---
+import { RESTAURANT, SITE } from '@/consts/site';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: RESTAURANT.name,
+  image: new URL(SITE.ogImage, SITE.url).toString(),
+  url: SITE.url,
+  telephone: RESTAURANT.telephone,
+  priceRange: RESTAURANT.priceRange,
+  servesCuisine: RESTAURANT.cuisine,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: RESTAURANT.streetAddress,
+    addressLocality: RESTAURANT.addressLocality,
+    addressRegion: RESTAURANT.addressRegion,
+    postalCode: RESTAURANT.postalCode,
+    addressCountry: RESTAURANT.addressCountry,
+  },
+  ...(RESTAURANT.latitude && RESTAURANT.longitude
+    ? {
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: RESTAURANT.latitude,
+          longitude: RESTAURANT.longitude,
+        },
+      }
+    : {}),
+  ...(RESTAURANT.openingHours.length ? { openingHours: RESTAURANT.openingHours } : {}),
+  ...(RESTAURANT.sameAs.length ? { sameAs: RESTAURANT.sameAs } : {}),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

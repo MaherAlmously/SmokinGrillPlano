@@ -1,0 +1,83 @@
+---
+interface Props {
+  eyebrow?: string;
+  /** Full-viewport hero (homepage) vs. compact band (inner pages) */
+  size?: 'full' | 'band';
+  image?: string;
+  /** Looping background video; `image` becomes its poster/fallback */
+  video?: string;
+  class?: string;
+}
+const { eyebrow, size = 'band', image, video, class: className = '' } = Astro.props;
+---
+
+<section
+  class:list={[
+    'bg-char relative isolate flex flex-col items-center justify-center overflow-hidden text-center text-white',
+    size === 'full' ? 'px-5 pt-28 pb-14 sm:min-h-svh sm:pt-28 sm:pb-20' : 'px-5 pt-28 pb-14 sm:pt-40 sm:pb-24',
+    className,
+  ]}
+>
+  {
+    video ? (
+      <video
+        class="hero-video absolute inset-0 -z-20 h-full w-full object-cover opacity-40"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={image}
+      >
+        <source src={video} type="video/mp4" />
+      </video>
+    ) : (
+      image && (
+        <img
+          src={image}
+          alt=""
+          class="absolute inset-0 -z-20 h-full w-full object-cover opacity-40"
+          loading="eager"
+        />
+      )
+    )
+  }
+  <!-- warm ember glow from below -->
+  <div
+    class="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-[radial-gradient(70%_60%_at_50%_100%,oklch(0.48_0.15_40/0.35)_0%,transparent_70%)]"
+    aria-hidden="true"
+  >
+  </div>
+  <!-- drifting smoke -->
+  <div class="smoke-layer -z-10" aria-hidden="true"></div>
+  <div class="smoke-layer smoke-layer--slow -z-10" aria-hidden="true"></div>
+  <!-- vignette -->
+  <div
+    class="absolute inset-0 -z-10 bg-[radial-gradient(100%_100%_at_50%_40%,transparent_50%,rgb(0_0_0/0.5)_100%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="hero-anim mx-auto w-full max-w-4xl">
+    {
+      eyebrow && (
+        <p class="eyebrow mb-6 flex items-center justify-center gap-3">
+          <span class="ember-rule" aria-hidden="true" />
+          {eyebrow}
+          <span class="ember-rule" aria-hidden="true" />
+        </p>
+      )
+    }
+    <slot />
+  </div>
+</section>
+
+<script>
+  // Respect reduced-motion: stop the background video and show its poster instead.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll<HTMLVideoElement>('.hero-video').forEach((v) => {
+      v.pause();
+      v.removeAttribute('autoplay');
+    });
+  }
+</script>

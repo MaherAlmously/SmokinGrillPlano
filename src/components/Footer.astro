@@ -1,0 +1,78 @@
+---
+import { RESTAURANT, ADDRESS_LINE, DIRECTIONS_URL } from '@/consts/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-char text-white">
+  <div class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <a href="/" class="flex items-center gap-3">
+          <img src="/images/logo.jpeg" alt="Smokin' Grill logo" class="h-12 w-12 rounded-full shadow-md" loading="lazy" />
+          <span class="font-heading text-xl font-extrabold tracking-tight uppercase">
+            Smokin' <span class="text-ember">Grill</span>
+          </span>
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-white/55">
+          Plano's premier 100% Zabiha Halal restaurant - wood-smoked meats, fire-grilled steaks,
+          burgers, and more. Hand-slaughtered meat only.
+        </p>      </div>
+
+      <div>
+        <h3 class="eyebrow mb-5">Visit</h3>
+        <address class="text-sm leading-relaxed text-white/70 not-italic">
+          3611 14th St Suite 110<br />
+          Plano, TX 75074
+        </address>
+        <a
+          href={DIRECTIONS_URL}
+          target="_blank"
+          rel="noopener"
+          class="text-ember mt-3 inline-block text-sm font-semibold hover:underline"
+        >
+          Get Directions →
+        </a>
+        <p class="mt-4">
+          <a href={RESTAURANT.phoneHref} class="text-sm font-semibold text-white hover:text-ember transition-colors">
+            {RESTAURANT.phoneDisplay}
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h3 class="eyebrow mb-5">Hours</h3>
+        <ul class="space-y-1.5 text-sm text-white/70">
+          <li class="flex justify-between gap-6"><span>Mon – Thu</span><span>11 AM – 11 PM</span></li>
+          <li class="flex justify-between gap-6"><span>Fri – Sat</span><span>11 AM – 12 AM</span></li>
+          <li class="flex justify-between gap-6"><span>Sunday</span><span>11 AM – 11 PM</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="eyebrow mb-5">Explore</h3>
+        <nav class="flex flex-col gap-2.5 text-sm" aria-label="Footer">
+          <a href="/menu" class="text-white/70 transition-colors hover:text-white">Menu</a>
+          <a href="/our-story" class="text-white/70 transition-colors hover:text-white">Our Story</a>
+          <a href="/catering" class="text-white/70 transition-colors hover:text-white">Catering & Events</a>
+          <a href="/contact" class="text-white/70 transition-colors hover:text-white">Location & Hours</a>
+        </nav>
+      </div>
+    </div>
+
+    <div
+      class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center text-xs text-white/40 sm:flex-row sm:text-left"
+    >
+      <p>© {year} Smokin' Grill · {ADDRESS_LINE}</p>
+      <p>100% Zabiha Halal · Hand-Slaughtered Meat Only</p>
+      <p>
+        Powered by&nbsp;<a
+          href="https://maxora.tech"
+          target="_blank"
+          rel="noopener"
+          class="text-white/60 transition-colors hover:text-ember">maxora.tech</a
+        >
+      </p>
+    </div>
+  </div>
+</footer>

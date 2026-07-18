@@ -1,0 +1,30 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SmokeHero from '@/components/SmokeHero.astro';
+import MenuExplorer from '@/components/menu/MenuExplorer.tsx';
+import { RESTAURANT } from '@/consts/site';
+---
+
+<Layout
+  title="Menu | Smokin' Grill"
+  description="Browse the full Smokin' Grill menu: wood-smoked BBQ, halal steaks, burgers, sandwiches, platters, kids meals, desserts, and drinks. 100% Zabiha Halal in Plano, TX."
+>
+  <SmokeHero eyebrow="The Menu" image="/images/hero-menu.jpg">
+    <h1 class="display text-4xl sm:text-6xl lg:text-7xl">
+      Smoked, Grilled &<br /><span class="text-ember">Made From Scratch</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
+      Every item below is 100% Zabiha Halal, hand-slaughtered only. Prices available in-store and by
+      phone while we finish our new menu.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+      <a href={RESTAURANT.phoneHref} class="btn-ember">Call Now · {RESTAURANT.phoneDisplay}</a>
+    </div>
+  </SmokeHero>
+
+  <section class="bg-background py-12 sm:py-24">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <MenuExplorer client:load />
+    </div>
+  </section>
+</Layout>

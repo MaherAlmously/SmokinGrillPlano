@@ -1,0 +1,136 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SmokeHero from '@/components/SmokeHero.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { RESTAURANT } from '@/consts/site';
+
+const events = [
+  {
+    title: 'Family Gatherings',
+    text: 'Eid dinners, reunions, and Sunday feasts - smoked meats by the pound or full trays.',
+  },
+  {
+    title: 'Mosque Events',
+    text: 'Iftars, fundraisers, and community dinners with guaranteed 100% Zabiha Halal catering.',
+  },
+  {
+    title: 'Community Events',
+    text: 'School functions, sports banquets, and neighborhood celebrations across Plano and DFW.',
+  },
+  {
+    title: 'Corporate Events',
+    text: 'Office lunches, client dinners, and team celebrations - delivered and set up on time.',
+  },
+  {
+    title: 'Birthdays',
+    text: 'Make the party unforgettable with a smokehouse spread everyone can enjoy.',
+  },
+  {
+    title: 'Graduations',
+    text: 'Celebrate their big day with brisket, kebabs, and desserts for the whole crowd.',
+  },
+  {
+    title: 'Large Group Dining',
+    text: 'Bring the whole crew to us - our dining room welcomes large parties and reservations.',
+  },
+];
+
+const steps = [
+  { title: 'Call Us', text: `Ring ${RESTAURANT.phoneDisplay} and tell us about your event - date, headcount, and favorites.` },
+  { title: 'Build Your Menu', text: 'We help you pick the right mix of smoked meats, grills, sides, and desserts for your crowd and budget.' },
+  { title: 'We Fire the Pit', text: 'Your order is smoked and grilled fresh, packed hot, and ready for pickup or delivery.' },
+];
+---
+
+<Layout
+  title="Catering & Group Events | Smokin' Grill"
+  description="100% Zabiha Halal smokehouse catering in Plano, TX for mosque events, corporate lunches, birthdays, graduations, and family gatherings. Call 469-298-0222 to request catering."
+>
+  <SmokeHero eyebrow="Catering & Group Events" image="/images/hero-catering.jpg">
+    <h1 class="display text-4xl sm:text-6xl lg:text-7xl">
+      Bring the Smokehouse<br /><span class="text-ember">To Your Event</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
+      Wood-smoked, fire-grilled, and 100% Zabiha Halal - catering that every guest can enjoy with
+      total confidence.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href={RESTAURANT.phoneHref} class="btn-ember">Request Catering · {RESTAURANT.phoneDisplay}</a>
+    </div>
+  </SmokeHero>
+
+  <section class="bg-background py-14 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading
+        eyebrow="Occasions We Love"
+        title="Any Gathering - Every Appetite"
+        description="From fifteen guests to five hundred - if there's a crowd to feed, we've smoked for it."
+      />
+      <div class="mt-10 sm:mt-14 grid grid-cols-2 gap-4 sm:gap-7 lg:grid-cols-3">
+        {
+          events.map((e, i) => (
+            <div
+              class="food-card border-border/60 bg-card group border p-4 shadow-sm hover:shadow-xl sm:p-7"
+              data-reveal
+              style={`--reveal-delay:${(i % 3) * 90}ms`}
+            >
+              <span class="ember-rule mb-5" aria-hidden="true" />
+              <h3 class="font-heading text-xl font-bold tracking-tight">{e.title}</h3>
+              <p class="text-muted-foreground mt-3 text-sm leading-relaxed">{e.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-secondary/50 py-14 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading
+        eyebrow="How It Works"
+        title="Three Steps to a Feast"
+      />
+      <div class="mt-10 sm:mt-14 grid gap-8 md:grid-cols-3">
+        {
+          steps.map((s, i) => (
+            <div class="text-center" data-reveal style={`--reveal-delay:${i * 110}ms`}>
+              <div class="bg-ember font-heading mx-auto flex h-12 w-12 items-center justify-center rounded-full text-lg font-extrabold text-white">
+                {i + 1}
+              </div>
+              <h3 class="font-heading mt-5 text-lg font-bold">{s.title}</h3>
+              <p class="text-muted-foreground mx-auto mt-3 max-w-xs text-sm leading-relaxed">{s.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Big CTA -->
+  <section class="bg-char relative isolate overflow-hidden py-16 text-center text-white sm:py-32">
+    <div class="smoke-layer -z-10" aria-hidden="true"></div>
+    <div
+      class="absolute inset-x-0 bottom-0 -z-10 h-2/3 bg-[radial-gradient(70%_60%_at_50%_100%,oklch(0.48_0.15_40/0.3)_0%,transparent_70%)]"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="mx-auto max-w-2xl px-5 sm:px-8" data-reveal>
+      <p class="eyebrow mb-5 flex items-center justify-center gap-3">
+        <span class="ember-rule" aria-hidden="true"></span>
+        Let's Plan Your Event
+        <span class="ember-rule" aria-hidden="true"></span>
+      </p>
+      <h2 class="display text-4xl sm:text-5xl">Ready When You Are</h2>
+      <p class="mt-5 text-white/65">
+        Call us and a member of our team will build a halal smokehouse menu around your event, your
+        headcount, and your budget.
+      </p>
+      <a href={RESTAURANT.phoneHref} class="btn-ember mt-10">
+        Request Catering · {RESTAURANT.phoneDisplay}
+      </a>
+      <p class="mt-5 text-xs tracking-[0.16em] text-white/40 uppercase">
+        Please allow 48 hours notice for large orders
+      </p>
+    </div>
+  </section>
+</Layout>

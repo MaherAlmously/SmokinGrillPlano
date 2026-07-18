@@ -1,17 +1,241 @@
 ---
+import Layout from '@/layouts/Layout.astro';
+import SmokeHero from '@/components/SmokeHero.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import FoodCard from '@/components/FoodCard.astro';
+import { FEATURED_ITEMS } from '@/consts/menu';
+import { RESTAURANT, DIRECTIONS_URL } from '@/consts/site';
 
+const promises = [
+  {
+    title: '100% Zabiha Halal',
+    text: 'Every cut on our menu is certified Zabiha Halal - no exceptions, ever.',
+  },
+  {
+    title: 'Hand-Slaughtered Only',
+    text: 'We serve hand-slaughtered meat exclusively, honoring tradition at every step.',
+  },
+  {
+    title: 'Real Wood Smoke',
+    text: 'Low and slow over real hardwood - no shortcuts, no liquid smoke, just fire and patience.',
+  },
+  {
+    title: 'Family First',
+    text: 'A warm, welcoming room built for families, friends, and long dinners in Plano.',
+  },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <!-- Hero -->
+  <SmokeHero size="full" image="/images/hero-home.jpg" video="/videos/hero-bbq.mp4">
+    <p class="eyebrow mb-6 flex items-center justify-center gap-3">
+      <span class="ember-rule" aria-hidden="true"></span>
+      Plano, Texas · 100% Zabiha Halal Smokehouse
+      <span class="ember-rule" aria-hidden="true"></span>
+    </p>
+    <h1 class="display hero-words text-4xl sm:text-7xl lg:text-8xl">
+      <span class="hero-word">Sm<img
+          src="/images/logo.jpeg"
+          alt="o"
+          class="inline-block h-[0.74em] w-[0.74em] translate-y-[0.04em] rounded-full align-baseline shadow-lg"
+          loading="eager"
+        />ke -</span>
+      <span class="hero-word">Fire</span><br />
+      <span class="hero-word text-ember">Halal</span>
+    </h1>
+    <p
+      id="hero-tagline"
+      class="hero-type mx-auto mt-7 min-h-[3lh] max-w-xl text-base leading-relaxed text-white/70 sm:min-h-[2lh] sm:text-lg"
+      data-text="Wood-smoked brisket, fire-grilled steaks, stacked burgers, and more - all 100% hand-slaughtered Zabiha Halal, made fresh in the heart of Plano."
+    >
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href="/menu" class="btn-ember">View Menu</a>
+      <a href={RESTAURANT.phoneHref} class="btn-outline-light">Call Now</a>
+    </div>
+  </SmokeHero>
+
+  <script>
+    // Type the hero tagline out character by character after the headline lands.
+    const tagline = document.getElementById('hero-tagline')!;
+    const text = tagline.dataset.text ?? '';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      tagline.textContent = text;
+    } else {
+      const caret = document.createElement('span');
+      caret.className = 'type-caret';
+      caret.setAttribute('aria-hidden', 'true');
+      const chars = document.createTextNode('');
+      tagline.append(chars, caret);
+      tagline.setAttribute('aria-label', text);
+      let i = 0;
+      const tick = () => {
+        if (i < text.length) {
+          chars.textContent = text.slice(0, ++i);
+          setTimeout(tick, 18);
+        } else {
+          setTimeout(() => caret.remove(), 1500);
+        }
+      };
+      setTimeout(tick, 1400);
+    }
+  </script>
+
+  <!-- Trust strip -->
+  <section class="bg-background py-14 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading
+        eyebrow="Our Promise"
+        title="Raised Right - Smoked Slow"
+        description="Premium smokehouse standards with an unwavering halal commitment - that's the Smokin' Grill difference."
+      />
+      <div class="mt-10 sm:mt-14 grid grid-cols-2 gap-4 sm:gap-8 lg:grid-cols-4">
+        {
+          promises.map((p, i) => (
+            <div
+              class="food-card border-border/60 bg-card border p-4 text-center shadow-sm hover:shadow-xl sm:p-7"
+              data-reveal
+              style={`--reveal-delay:${i * 90}ms`}
+            >
+              <span class="ember-rule mb-5" aria-hidden="true" />
+              <h3 class="font-heading text-lg font-bold tracking-tight">{p.title}</h3>
+              <p class="text-muted-foreground mt-3 text-sm leading-relaxed">{p.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured dishes -->
+  <section class="bg-secondary/50 py-14 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading
+        eyebrow="From the Pit"
+        title="The Dishes That Made Our Name"
+        description="Twelve reasons Plano keeps coming back - smoked, grilled, and fried the way it should be."
+      />
+      <div class="mt-10 sm:mt-14 grid grid-cols-2 gap-4 sm:gap-7 lg:grid-cols-3 xl:grid-cols-4">
+        {FEATURED_ITEMS.map((item, i) => <FoodCard item={item} delay={(i % 4) * 90} />)}
+      </div>
+      <div class="mt-10 sm:mt-14 text-center" data-reveal>
+        <a href="/menu" class="btn-ember">Explore the Full Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story teaser -->
+  <section class="bg-char relative isolate overflow-hidden py-16 text-white sm:py-32">
+    <div class="smoke-layer smoke-layer--slow -z-10" aria-hidden="true"></div>
+    <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2">
+      <div data-reveal>
+        <p class="eyebrow mb-5 flex items-center gap-3">
+          <span class="ember-rule" aria-hidden="true"></span>
+          Our Story
+        </p>
+        <h2 class="display text-4xl text-white sm:text-5xl">
+          Where Texas Smoke Meets <span class="text-ember">Halal Tradition</span>
+        </h2>
+        <p class="mt-6 max-w-lg text-base leading-relaxed text-white/65">
+          We built Smokin' Grill on a simple belief: a family in Plano should never have to choose
+          between great food and their values. Real wood, real fire, and 100% hand-slaughtered
+          Zabiha Halal meat - that's the whole story, and we tell it on every plate.
+        </p>
+        <a href="/our-story" class="btn-outline-light mt-9">Read Our Story</a>
+      </div>
+      <div class="relative" data-reveal style="--reveal-delay:120ms">
+        <!-- Temporary stock photo - swap for real restaurant imagery -->
+        <div class="img-zoom relative aspect-[4/5] w-full overflow-hidden rounded-xl">
+          <img
+            src="/images/story/smoker.jpg"
+            alt="Grilling over open fire at Smokin' Grill"
+            loading="lazy"
+            class="h-full w-full object-cover"
+          />
+          <img
+            src="/images/logo.jpeg"
+            alt=""
+            class="absolute right-4 bottom-4 h-20 w-20 rounded-full shadow-2xl"
+            loading="lazy"
+          />
+        </div>
+        <div
+          class="border-ember absolute -right-4 -bottom-4 -z-10 h-full w-full rounded-xl border"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catering banner -->
+  <section class="bg-ember relative overflow-hidden py-14 text-white sm:py-24">
+    <div
+      class="absolute inset-0 bg-[radial-gradient(80%_100%_at_80%_0%,rgb(255_255_255/0.12),transparent_60%)]"
+      aria-hidden="true"
+    >
+    </div>
+    <div
+      class="relative mx-auto flex max-w-7xl flex-col items-center gap-8 px-5 text-center sm:px-8 lg:flex-row lg:justify-between lg:text-left"
+      data-reveal
+    >
+      <div>
+        <h2 class="display text-3xl sm:text-4xl">Feeding a Crowd?</h2>
+        <p class="mt-3 max-w-xl text-white/85">
+          From mosque events to corporate lunches and graduation parties - we cater halal smokehouse
+          feasts for groups of any size.
+        </p>
+      </div>
+      <a
+        href="/catering"
+        class="btn bg-char hover:bg-charcoal shrink-0 text-white shadow-lg hover:-translate-y-0.5"
+      >
+        Request Catering
+      </a>
+    </div>
+  </section>
+
+  <!-- Hours & location strip -->
+  <section class="bg-background py-14 sm:py-28">
+    <div class="mx-auto max-w-7xl px-5 sm:px-8">
+      <div class="grid gap-12 lg:grid-cols-3">
+        <div data-reveal>
+          <p class="eyebrow mb-4">Find Us</p>
+          <h2 class="display text-2xl sm:text-3xl">Visit the Smokehouse</h2>
+          <address class="text-muted-foreground mt-5 leading-relaxed not-italic">
+            3611 14th St Suite 110<br />
+            Plano, TX 75074
+          </address>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href={DIRECTIONS_URL} target="_blank" rel="noopener" class="btn-ember">
+              Get Directions
+            </a>
+            <a href={RESTAURANT.phoneHref} class="btn-outline-dark">Call Now</a>
+          </div>
+        </div>
+        <div data-reveal style="--reveal-delay:100ms">
+          <p class="eyebrow mb-4">Hours</p>
+          <ul class="divide-border divide-y text-sm">
+            <li class="flex justify-between gap-6 py-2.5"><span class="font-semibold">Mon – Thu</span><span class="text-muted-foreground">11:00 AM – 11:00 PM</span></li>
+            <li class="flex justify-between gap-6 py-2.5"><span class="font-semibold">Fri – Sat</span><span class="text-muted-foreground">11:00 AM – 12:00 AM</span></li>
+            <li class="flex justify-between gap-6 py-2.5"><span class="font-semibold">Sunday</span><span class="text-muted-foreground">11:00 AM – 11:00 PM</span></li>
+          </ul>
+        </div>
+        <div data-reveal style="--reveal-delay:200ms">
+          <p class="eyebrow mb-4">Good to Know</p>
+          <ul class="text-muted-foreground grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
+            <li>Dine-In</li>
+            <li>Takeout</li>
+            <li>Delivery</li>
+            <li>Reservations</li>
+            <li>Free Parking</li>
+            <li>Wheelchair Accessible</li>
+            <li>Family Friendly</li>
+            <li>Large Groups</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

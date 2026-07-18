@@ -1,0 +1,124 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SmokeHero from '@/components/SmokeHero.astro';
+import { RESTAURANT } from '@/consts/site';
+
+const chapters = [
+  {
+    eyebrow: 'Our Founder',
+    title: 'From the Classroom to the Pit',
+    text: [
+      'Smokin’ Grill began with our founder, Sayed Ali, a hafiz of the Quran and a teacher who spent years in the classroom teaching hundreds of students. Outside of school, he had a quiet passion: barbecue. Beef jerky, brisket, kebabs, and burgers, smoked and grilled the slow way, shared with anyone who happened to be around.',
+      'His students were his first customers. What started as a side passion turned into selling jerky and burgers after school, and the word spread faster than he ever expected. When the food kept selling out, the answer became obvious: open the doors for real. That is how Smokin’ Grill was born, and people have loved it ever since.',
+    ],
+    imageLabel: 'Trays of fresh kebabs, made the way it started',
+    image: '/images/story/founder.jpg',
+  },
+  {
+    eyebrow: 'How We Cook',
+    title: 'Real Wood - Real Fire',
+    text: [
+      'Our brisket, chicken, and turkey go into the smoker over real hardwood and stay there for hours. No shortcuts, no liquid smoke. Steaks, burgers, and kebabs are grilled fresh when you order them.',
+      'It’s not just barbecue, either. From Philly cheesesteaks to Lahori fish fry to fresh desserts, everything on the menu is made in our kitchen with the same care.',
+    ],
+    imageLabel: 'Kebabs over the open flame',
+    image: '/images/story/smoker.jpg',
+  },
+  {
+    eyebrow: 'Our Halal Promise',
+    title: '100% Zabiha - No Exceptions',
+    text: [
+      'Every cut of meat we serve is 100% Zabiha Halal and hand-slaughtered only. No machine processing, ever. We personally vet every supplier we work with.',
+      'You should never have to ask twice or read the fine print. At Smokin’ Grill, if it’s on the menu, it meets that standard. Period.',
+    ],
+    imageLabel: 'Hand-selected halal cuts',
+    image: '/images/story/halal-cuts.jpg',
+  },
+  {
+    eyebrow: 'Our Home',
+    title: 'A Family Spot in Plano',
+    text: [
+      'We built a place where you can bring everyone: grandparents, kids, the whole crew after Jummah. There’s a kids menu, room for big tables, and free parking right outside.',
+      'Plano is our home, and our regulars are our neighbors. Whether it’s a quick lunch or a graduation dinner for thirty, we’re glad you’re here.',
+    ],
+    imageLabel: 'The dining room',
+    image: '/images/story/dining-room.jpg',
+  },
+];
+---
+
+<Layout
+  title="Our Story | Smokin' Grill"
+  description="The story of Smokin' Grill: authentic wood-fired smoking, a 100% Zabiha Halal hand-slaughtered standard, and a family table at the heart of Plano, Texas."
+>
+  <SmokeHero eyebrow="Our Story" image="/images/hero-story.jpg">
+    <h1 class="display text-4xl sm:text-6xl lg:text-7xl">
+      Good Food -<br /><span class="text-ember">Done Right</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
+      Wood-smoked meats, fire-grilled favorites, and a 100% Zabiha Halal kitchen, made fresh every
+      day in Plano.
+    </p>
+  </SmokeHero>
+
+  {
+    chapters.map((c, i) => (
+      <section class:list={['py-14 sm:py-28', i % 2 === 1 ? 'bg-secondary/50' : 'bg-background']}>
+        <div
+          class:list={[
+            'mx-auto grid max-w-6xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20',
+          ]}
+        >
+          <div class:list={[i % 2 === 1 ? 'lg:order-2' : '']} data-reveal>
+            <p class="eyebrow mb-4 flex items-center gap-3">
+              <span class="ember-rule" aria-hidden="true" />
+              {c.eyebrow}
+            </p>
+            <h2 class="display text-4xl sm:text-5xl">{c.title}</h2>
+            {c.text.map((t) => (
+              <p class="text-muted-foreground mt-5 text-base leading-relaxed sm:text-lg">{t}</p>
+            ))}
+          </div>
+          <div class:list={[i % 2 === 1 ? 'lg:order-1' : '']} data-reveal style="--reveal-delay:120ms">
+            {/* Temporary stock photo — swap for real restaurant imagery */}
+            <div class="img-zoom relative aspect-[4/3] overflow-hidden rounded-xl shadow-xl">
+              <img src={c.image} alt={c.imageLabel} loading="lazy" class="h-full w-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Pull quote -->
+  <section class="bg-char relative isolate overflow-hidden py-16 text-center text-white sm:py-32">
+    <div class="smoke-layer -z-10" aria-hidden="true"></div>
+    <div class="mx-auto max-w-3xl px-5 sm:px-8" data-reveal>
+      <img
+        src="/images/logo.jpeg"
+        alt="Smokin' Grill logo"
+        class="ring-ember/40 mx-auto mb-8 h-24 w-24 rounded-full shadow-2xl ring-2"
+        loading="lazy"
+      />
+      <blockquote class="display text-2xl leading-tight sm:text-4xl lg:text-5xl">
+        “If we wouldn't serve it to our own family,<br class="hidden sm:block" />
+        <span class="text-ember">we won't serve it to yours.</span>”
+      </blockquote>
+      <p class="mt-8 text-sm tracking-[0.2em] text-white/50 uppercase">Sayed Ali, Founder</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-background py-14 text-center sm:py-24">
+    <div class="mx-auto max-w-2xl px-5 sm:px-8" data-reveal>
+      <h2 class="display text-3xl sm:text-4xl">Come Taste the Story</h2>
+      <p class="text-muted-foreground mt-4">
+        The pit is lit and the table is set. We'd love to have you.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-4">
+        <a href="/menu" class="btn-ember">View Menu</a>
+        <a href={RESTAURANT.phoneHref} class="btn-outline-dark">Call Now</a>
+      </div>
+    </div>
+  </section>
+</Layout>

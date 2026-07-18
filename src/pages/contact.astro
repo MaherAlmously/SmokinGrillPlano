@@ -1,0 +1,217 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import SmokeHero from '@/components/SmokeHero.astro';
+import { RESTAURANT, DIRECTIONS_URL, MAP_EMBED_URL, HOURS, AMENITIES } from '@/consts/site';
+---
+
+<Layout
+  title="Location, Hours & Contact | Smokin' Grill"
+  description="Visit Smokin' Grill at 3611 14th St Suite 110, Plano, TX 75074. Open daily from 11 AM. Call 469-298-0222. Dine-in, takeout, delivery, reservations, free parking."
+>
+  <SmokeHero eyebrow="Location, Hours & Contact" image="/images/hero-contact.jpg">
+    <h1 class="display text-4xl sm:text-6xl lg:text-7xl">
+      Come Hungry -<br /><span class="text-ember">Leave Happy</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/70">
+      Find us on 14th Street in Plano - free parking, a warm welcome, and the smell of woodsmoke to
+      guide you in.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+      <a href={RESTAURANT.phoneHref} class="btn-ember">Call Now</a>
+      <a href={DIRECTIONS_URL} target="_blank" rel="noopener" class="btn-outline-light">
+        Get Directions
+      </a>
+    </div>
+  </SmokeHero>
+
+  <section class="bg-background py-14 sm:py-28">
+    <div class="mx-auto grid max-w-7xl gap-14 px-5 sm:px-8 lg:grid-cols-5">
+      <!-- Info column -->
+      <div class="space-y-12 lg:col-span-2">
+        <div data-reveal>
+          <p class="eyebrow mb-4">Address</p>
+          <address class="text-lg leading-relaxed font-medium not-italic">
+            3611 14th St Suite 110<br />
+            Plano, TX 75074
+          </address>
+          <a
+            href={DIRECTIONS_URL}
+            target="_blank"
+            rel="noopener"
+            class="text-ember mt-3 inline-block text-sm font-semibold hover:underline">Get Directions →</a
+          >
+        </div>
+
+        <div data-reveal>
+          <p class="eyebrow mb-4">Phone</p>
+          <a
+            href={RESTAURANT.phoneHref}
+            class="font-heading hover:text-ember text-2xl font-extrabold tracking-tight transition-colors"
+          >
+            {RESTAURANT.phoneDisplay}
+          </a>
+          <p class="text-muted-foreground mt-2 text-sm">
+            Call for takeout, reservations, and catering.
+          </p>
+        </div>
+
+        <div data-reveal>
+          <p class="eyebrow mb-4">Hours</p>
+          <ul class="divide-border divide-y text-sm">
+            {
+              HOURS.map((h) => (
+                <li class="flex items-center justify-between gap-6 py-2.5">
+                  <span class="font-semibold">{h.day}</span>
+                  <span class="text-muted-foreground tabular-nums">{h.hours}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div data-reveal>
+          <p class="eyebrow mb-4">Good to Know</p>
+          <ul class="grid grid-cols-2 gap-2.5">
+            {
+              AMENITIES.map((a) => (
+                <li class="text-muted-foreground flex items-center gap-2 text-sm">
+                  <svg
+                    class="text-ember h-4 w-4 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  {a}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="lg:col-span-3" data-reveal style="--reveal-delay:120ms">
+        <div class="border-border/60 h-full min-h-[420px] overflow-hidden rounded-xl border shadow-lg">
+          <iframe
+            src={MAP_EMBED_URL}
+            title="Map to Smokin' Grill - 3611 14th St Suite 110, Plano, TX 75074"
+            class="h-full min-h-[420px] w-full"
+            style="border:0"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+          >
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Message form -->
+  <section class="bg-secondary/50 py-14 sm:py-28">
+    <div class="mx-auto max-w-2xl px-5 sm:px-8" data-reveal>
+      <p class="eyebrow mb-4 text-center">Send Us a Message</p>
+      <h2 class="display text-center text-3xl sm:text-4xl">Questions? We're Listening.</h2>
+      <p class="text-muted-foreground mt-4 text-center text-sm sm:text-base">
+        Ask about catering, reservations, or anything else - we'll get back to you soon. In a hurry?
+        Just call <a href={RESTAURANT.phoneHref} class="text-ember font-semibold hover:underline">{RESTAURANT.phoneDisplay}</a>.
+      </p>
+
+      <form id="contact-form" class="mt-10 space-y-5">
+        <input type="hidden" name="access_key" value="285a6a6e-ff78-4307-9edc-4a7648cd763c" />
+        <input type="hidden" name="subject" value="New message from smokingrillplano.com" />
+        <input type="hidden" name="from_name" value="Smokin' Grill Website" />
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="cf-name" class="mb-1.5 block text-sm font-semibold">Name</label>
+            <input
+              id="cf-name"
+              type="text"
+              name="name"
+              required
+              autocomplete="name"
+              class="border-border bg-card focus-visible:ring-ember h-12 w-full rounded-md border px-4 text-sm shadow-sm outline-none focus-visible:ring-2"
+            />
+          </div>
+          <div>
+            <label for="cf-phone" class="mb-1.5 block text-sm font-semibold">Phone or Email</label>
+            <input
+              id="cf-phone"
+              type="text"
+              name="contact"
+              required
+              autocomplete="tel"
+              class="border-border bg-card focus-visible:ring-ember h-12 w-full rounded-md border px-4 text-sm shadow-sm outline-none focus-visible:ring-2"
+            />
+          </div>
+        </div>
+        <div>
+          <label for="cf-message" class="mb-1.5 block text-sm font-semibold">Message</label>
+          <textarea
+            id="cf-message"
+            name="message"
+            required
+            rows="5"
+            class="border-border bg-card focus-visible:ring-ember w-full rounded-md border px-4 py-3 text-sm shadow-sm outline-none focus-visible:ring-2"></textarea>
+        </div>
+        <button type="submit" class="btn-ember w-full sm:w-auto">Send Message</button>
+        <p id="cf-status" class="hidden text-sm font-semibold" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const status = document.getElementById('cf-status')!;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      status.classList.add('hidden');
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const data = await res.json();
+        if (data.success) {
+          form.reset();
+          status.textContent = "Message sent - we'll get back to you soon!";
+          status.className = 'text-sm font-semibold text-green-600';
+        } else {
+          throw new Error(data.message);
+        }
+      } catch {
+        status.textContent = 'Something went wrong. Please try again, or call us at 469-298-0222.';
+        status.className = 'text-destructive text-sm font-semibold';
+      }
+      button.disabled = false;
+      button.textContent = 'Send Message';
+    });
+  </script>
+
+  <!-- Bottom CTA -->
+  <section class="bg-ember py-16 text-center text-white">
+    <div class="mx-auto max-w-2xl px-5 sm:px-8" data-reveal>
+      <h2 class="display text-3xl sm:text-4xl">The Pit Is Already Lit</h2>
+      <p class="mt-3 text-white/85">Open every day from 11 AM. See you at the table.</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a href="/menu" class="btn bg-char hover:bg-charcoal text-white shadow-lg hover:-translate-y-0.5">
+          View Menu
+        </a>
+        <a href={RESTAURANT.phoneHref} class="btn border border-white/50 text-white hover:bg-white/10">
+          Call Now
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
