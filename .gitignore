@@ -29,3 +29,4 @@ pnpm-debug.log*
 # local tooling notes
 .claude/
 CLAUDE.md
+AGENTS.md
