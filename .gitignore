@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # local backup archives (not needed in git history)
 *.zip
+
+# local tooling notes
+.claude/
+CLAUDE.md
